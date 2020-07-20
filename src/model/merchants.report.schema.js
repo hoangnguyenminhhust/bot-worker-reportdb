@@ -1,6 +1,6 @@
 
-import { Schema } from 'mongoose';
-import MgConnect from '../config/mongoose.connect';
+const { Schema } = require('mongoose');
+const MgConnect = require('../config/mongoose.connect.js');
 
 const MerchantsReport = new Schema({
   business_email: { type: String },
@@ -13,4 +13,4 @@ MerchantsReport.index({
 });
 
 const MerchantsSchema = MgConnect.model('merchants-v2', MerchantsReport);
-export default MerchantsSchema;
+module.exports = MerchantsSchema;

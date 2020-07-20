@@ -1,33 +1,35 @@
-import { CronJob } from 'cron';
-import request from 'request';
-import Merchants from '../model/merchants.shema';
-import MerchantsReport from '../model/merchants.report.schema';
-
+const {
+  CronJob,
+} = require('cron');
+const request = require('request');
+const Merchants = require('../model/merchants.shema');
+const MerchantsReport = require('../model/merchants.report.schema.js');
 
 
 const job = new CronJob(
   '* * * * * *',
   async () => {
     try {
-      await Merchants.aggregate([
-        {
+      await Merchants.aggregate([{
 
-          $project: {
-            _id: 1,
-            business_email: 1,
-            business_phone: 1,
-            business_name: 1,
-            business_address: 1,
-          },
+        $project: {
+          _id: 1,
+          business_email: 1,
+          business_phone: 1,
+          business_name: 1,
+          business_address: 1,
         },
-        {
-          $merge: {
-            into: { coll: 'merchants-v2' },
-            on: '_id',
-            whenMatched: 'merge', // Optional
-            whenNotMatched: 'insert', // Optional
+      },
+      {
+        $merge: {
+          into: {
+            coll: 'merchants-v2',
           },
+          on: '_id',
+          whenMatched: 'merge', // Optional
+          whenNotMatched: 'insert', // Optional
         },
+      },
       ]);
       const data = await MerchantsReport.find({});
 
@@ -60,4 +62,4 @@ const job = new CronJob(
 
 );
 
-export default job;
+module.exports = job;

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "worker-report",
   "scripts": {
-    "dev": "node --inspect=0.0.0.0:9230 -r ts-node/register ./node_modules/moleculer/bin/moleculer-runner.js --env --hot --repl --config moleculer.config.ts src/services/*.service.ts",
+    "dev": "node server.js",
     "build": "tsc",
     "cli": "moleculer connect NATS",
     "start": "moleculer-runner src/services",
@@ -23,7 +23,6 @@
     "@types/mongoose": "^5.7.8",
     "@types/node": "^10.12.12",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
-    "dotenv": "^8.2.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-typescript": "^5.0.0",
     "eslint-plugin-import": "^2.18.2",
@@ -35,10 +34,12 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "@ns/sdk": "^1.1.7",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "cron": "^1.8.2",
+    "express": "^4.17.1",
     "lodash": "^4.17.15",
     "moleculer": "^0.13.0",
     "moment-timezone": "^0.5.28",
