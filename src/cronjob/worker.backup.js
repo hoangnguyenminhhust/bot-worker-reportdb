@@ -44,9 +44,7 @@ const job = new CronJob(
           Version: '1.0',
           ChannelCode: 'NEXTSHOP',
           EncData: {
-            listMerchantInfo: {
-              1801: data,
-            },
+            listMerchantInfo: data,
           },
           'Checksum ': '1b15118c5e7c56e0ca5de1fc7c9a8667',
         }),
