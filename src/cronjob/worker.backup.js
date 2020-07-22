@@ -7,7 +7,7 @@ const MerchantsReport = require('../model/merchants.report.schema.js');
 
 
 const job = new CronJob(
-  '* * * * * *',
+  '* 30 * * * *',
   async () => {
     try {
       await Merchants.aggregate([{

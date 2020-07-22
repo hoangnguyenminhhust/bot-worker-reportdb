@@ -1,4 +1,4 @@
-FROM node
+FROM node:12
 
 RUN mkdir /app
 WORKDIR /app
@@ -10,5 +10,4 @@ RUN npm i
 
 COPY . .
 
-ENV NODE_ENV=production
-CMD ["npm", "run" , "dev"]
+CMD [ "npm", "start" ]

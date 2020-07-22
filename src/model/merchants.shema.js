@@ -1,6 +1,6 @@
 
 const { Schema } = require('mongoose');
-const MgConnect = require('../config/mongoose.connect');
+const mongoose = require('mongoose')
 
 const MerchantSchema = new Schema({
   organizationId: { type: Schema.Types.ObjectId, default: null },
@@ -65,5 +65,4 @@ MerchantSchema.index({
   phone: 'text',
   email: 'text',
 });
-const MerchantsSchema = MgConnect.model('merchants', MerchantSchema);
-module.exports = MerchantsSchema;
+module.exports = mongoose.model('merchants', MerchantSchema);

@@ -1,0 +1,9 @@
+version: "2.1"
+
+services:
+  worker-report:
+    build: .
+    image: worker-report
+    ports:   
+      - 3000:3000
+    restart: always
