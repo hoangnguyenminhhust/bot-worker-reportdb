@@ -1,6 +1,6 @@
 
 const { Schema } = require('mongoose');
-const MgConnect = require('../config/mongoose.connect.js');
+const mongoose = require('mongoose')
 
 const MerchantsReport = new Schema({
   business_email: { type: String },
@@ -12,5 +12,5 @@ MerchantsReport.index({
 
 });
 
-const MerchantsSchema = MgConnect.model('merchants-v2', MerchantsReport);
-module.exports = MerchantsSchema;
+module.exports =   mongoose.model('merchants-v2', MerchantsReport);
+
