@@ -49,7 +49,8 @@ const job = new CronJob(
           'Checksum ': '1b15118c5e7c56e0ca5de1fc7c9a8667',
         }),
       };
-      request(options, (error, response) => {
+      const options2 = JSON.stringify(options)
+      request(options2, (error, response) => {
         if (error) throw new Error(error);
         console.log(response.body);
       });
