@@ -7,53 +7,66 @@ const MerchantsReport = require('../model/merchants.report.schema.js');
 
 
 const job = new CronJob(
-  '* * * * * *',
+  '* * 1 * * *',
   async () => {
     try {
       await Merchants.aggregate([{
 
-        $project: {
-          _id: 1,
-          business_email: 1,
-          business_phone: 1,
-          business_name: 1,
-          business_address: 1,
-        },
-      },
-      {
-        $merge: {
-          into: {
-            coll: 'merchants-v2',
+          $project: {
+            _id: 1,
+            business_email: 1,
+            business_phone: 1,
+            business_name: 1,
+            business_address: 1,
+            province_id: 1,
           },
-          on: '_id',
-          whenMatched: 'merge', // Optional
-          whenNotMatched: 'insert', // Optional
         },
-      },
+        {
+          $merge: {
+            into: {
+              coll: 'merchants-v2',
+            },
+            on: '_id',
+            whenMatched: 'merge', // Optional
+            whenNotMatched: 'insert', // Optional
+          },
+        },
       ]);
-      const data = await MerchantsReport.findOne();
-      const data2 = JSON.stringify(data)
-
-      const options = {
-        method: 'POST',
-        url: 'https://service.nextlend.vn/v1/request.php',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          Fnc: 'receiveListAllMerchantFromPartner',
-          Version: '1.0',
-          ChannelCode: 'NEXTSHOP',
-          EncData: {
-            listMerchantInfo: data2,
+      const total = await MerchantsReport.find().countDocuments();
+      const limit = 500
+      var offSet = Math.floor(total / limit) + 1;
+      for (let skip = 0; skip < offSet; skip++) {
+        const data = await MerchantsReport.find().limit(limit).skip(skip)
+        const data2 = JSON.stringify({
+          listMerchantInfo: data,
+        })
+        const options = {
+          method: 'POST',
+          url: 'https://service.nextlend.vn/v1/request.php',
+          headers: {
+            'Content-Type': 'application/json',
           },
-          'Checksum ': '1b15118c5e7c56e0ca5de1fc7c9a8667',
-        }),
-      };
-      request(options, (error, response) => {
-        if (error) throw new Error(error);
-        console.log(response.body);
-      });
+          body: JSON.stringify({
+            Fnc: 'receiveListAllMerchantFromPartner',
+            Version: '1.0',
+            ChannelCode: 'NEXTSHOP',
+            EncData: data2,
+            'Checksum ': '1b15118c5e7c56e0ca5de1fc7c9a8667',
+          }),
+        };
+        setTimeout(() => {
+          request(options, (error, response) => {
+            if (error) throw new Error(error);
+            console.log(response.body);
+          });
+        }, 3000);
+    
+      }
+
+
+
+
+
     } catch (error) {
       console.log(error);
     }
