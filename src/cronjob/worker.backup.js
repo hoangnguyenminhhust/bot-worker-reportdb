@@ -7,7 +7,7 @@ const MerchantsReport = require('../model/merchants.report.schema.js');
 
 
 const job = new CronJob(
-  '* 30 * * * *',
+  '* * * * * *',
   async () => {
     try {
       await Merchants.aggregate([{
@@ -31,7 +31,7 @@ const job = new CronJob(
         },
       },
       ]);
-      const data = await MerchantsReport.find({});
+      const data = await MerchantsReport.find();
 
       const options = {
         method: 'POST',
