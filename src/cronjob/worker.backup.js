@@ -31,7 +31,8 @@ const job = new CronJob(
         },
       },
       ]);
-      const data = await MerchantsReport.find();
+      const data = await MerchantsReport.findOne();
+      const data2 = JSON.stringify(data)
 
       const options = {
         method: 'POST',
@@ -44,13 +45,12 @@ const job = new CronJob(
           Version: '1.0',
           ChannelCode: 'NEXTSHOP',
           EncData: {
-            listMerchantInfo: data,
+            listMerchantInfo: data2,
           },
           'Checksum ': '1b15118c5e7c56e0ca5de1fc7c9a8667',
         }),
       };
-      const options2 = JSON.stringify(options)
-      request(options2, (error, response) => {
+      request(options, (error, response) => {
         if (error) throw new Error(error);
         console.log(response.body);
       });
