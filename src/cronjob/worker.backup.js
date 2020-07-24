@@ -36,9 +36,10 @@ const job = new CronJob(
       const limit = 500
       var offSet = Math.floor(total / limit) + 1;
       for (let skip = 0; skip < offSet; skip++) {
-        const data = await MerchantsReport.find().limit(limit).skip(skip)
+        const data = await MerchantsReport.findOne()
+        // .limit(limit).skip(skip)
         const data2 = JSON.stringify({
-          listMerchantInfo: data,
+          listMerchantInfo: [data],
 
         })
         console.log('---------------------------------', data2)
