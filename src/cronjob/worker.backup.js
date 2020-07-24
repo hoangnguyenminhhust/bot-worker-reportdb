@@ -55,12 +55,12 @@ const job = new CronJob(
             Checksum: '1b15118c5e7c56e0ca5de1fc7c9a8667',
           }),
         };
-        setTimeout(() => {
-          request(options, (error, response) => {
-            if (error) throw new Error(error);
-            console.log(response.body);
-          });
-        }, 3000);
+
+       await request(options, (error, response) => {
+          if (error) throw new Error(error);
+          console.log(response.body);
+        });
+
 
       }
 
