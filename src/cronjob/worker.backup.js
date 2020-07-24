@@ -39,7 +39,7 @@ const job = new CronJob(
         const data = await MerchantsReport.findOne()
         // .limit(limit).skip(skip)
         const data2 = await JSON.stringify({
-          listMerchantInfo: [data],
+          listMerchantInfo: data,
         })
         const options = {
           method: 'POST',
