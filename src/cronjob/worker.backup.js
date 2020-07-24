@@ -41,6 +41,7 @@ const job = new CronJob(
           listMerchantInfo: data,
 
         })
+        console.log('---------------------------------', data2)
         const options = {
           method: 'POST',
           url: 'https://service.nextlend.vn/v1/request.php',
