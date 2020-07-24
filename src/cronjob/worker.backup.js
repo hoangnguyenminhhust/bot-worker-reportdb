@@ -7,7 +7,7 @@ const MerchantsReport = require('../model/merchants.report.schema.js');
 
 
 const job = new CronJob(
-  '* * 1 * * *',
+  '* * * * * *',
   async () => {
     try {
       await Merchants.aggregate([{
@@ -38,13 +38,8 @@ const job = new CronJob(
       for (let skip = 0; skip < offSet; skip++) {
         const data = await MerchantsReport.find().limit(limit).skip(skip)
         const data2 = JSON.stringify({
-          Fnc: 'receiveListAllMerchantFromPartner',
-          Version: '1.0',
-          ChannelCode: 'NEXTSHOP',
-          EncData: {
-            listMerchantInfo: data,
-          },
-          Checksum: '1b15118c5e7c56e0ca5de1fc7c9a8667',
+          listMerchantInfo: data,
+
         })
         const options = {
           method: 'POST',
@@ -52,7 +47,13 @@ const job = new CronJob(
           headers: {
             'Content-Type': 'application/json',
           },
-          body: data2,
+          body: JSON.stringify({
+            Fnc: 'receiveListAllMerchantFromPartner',
+            Version: '1.0',
+            ChannelCode: 'NEXTSHOP',
+            EncData: data2,
+            Checksum: '1b15118c5e7c56e0ca5de1fc7c9a8667',
+          }),
         };
         setTimeout(() => {
           request(options, (error, response) => {

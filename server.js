@@ -2,9 +2,9 @@ const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const job = require('./src/cronjob/worker.backup.js');
-// const uri = "mongodb://nextsolution:password@206.189.34.192:27017/test"
+const uri = "mongodb://nextsolution:password@206.189.34.192:27017/test"
 
-const uri = 'mongodb://nextProduction2:DuDZmMDHcKkJv54rEtRG@172.31.29.239:27017/merchants?authSource=admin';
+// const uri = 'mongodb://nextProduction2:DuDZmMDHcKkJv54rEtRG@172.31.29.239:27017/merchants?authSource=admin';
 const options = { useNewUrlParser: true, useUnifiedTopology: true };
 dotenv.config();
 
