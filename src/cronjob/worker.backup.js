@@ -42,20 +42,19 @@ const job = new CronJob(
           listMerchantInfo: [data],
 
         })
-        const data3 = await JSON.stringify({
-          Fnc: 'receiveListAllMerchantFromPartner',
-          Version: '1.0',
-          ChannelCode: 'NEXTSHOP',
-          EncData: [data],
-          Checksum: '1b15118c5e7c56e0ca5de1fc7c9a8667',
-        })
         const options = {
           method: 'POST',
           url: 'https://service.nextlend.vn/v1/request.php',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: data3,
+          body: await JSON.stringify({
+            Fnc: 'receiveListAllMerchantFromPartner',
+            Version: '1.0',
+            ChannelCode: 'NEXTSHOP',
+            EncData: data2,
+            Checksum: '1b15118c5e7c56e0ca5de1fc7c9a8667',
+          }),
         };
 
        await request(options, (error, response) => {
