@@ -38,7 +38,13 @@ const job = new CronJob(
       for (let skip = 0; skip < offSet; skip++) {
         const data = await MerchantsReport.find().limit(limit).skip(skip)
         const data2 = JSON.stringify({
-          listMerchantInfo: data,
+          Fnc: 'receiveListAllMerchantFromPartner',
+          Version: '1.0',
+          ChannelCode: 'NEXTSHOP',
+          EncData: {
+            listMerchantInfo: data,
+          },
+          Checksum: '1b15118c5e7c56e0ca5de1fc7c9a8667',
         })
         const options = {
           method: 'POST',
@@ -46,13 +52,7 @@ const job = new CronJob(
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            Fnc: 'receiveListAllMerchantFromPartner',
-            Version: '1.0',
-            ChannelCode: 'NEXTSHOP',
-            EncData: data2,
-            'Checksum ': '1b15118c5e7c56e0ca5de1fc7c9a8667',
-          }),
+          body: data2,
         };
         setTimeout(() => {
           request(options, (error, response) => {
@@ -60,9 +60,8 @@ const job = new CronJob(
             console.log(response.body);
           });
         }, 3000);
-    
-      }
 
+      }
 
 
 
