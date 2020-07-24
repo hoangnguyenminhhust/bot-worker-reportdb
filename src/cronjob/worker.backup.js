@@ -53,7 +53,7 @@ const job = new CronJob(
             Fnc: 'receiveListAllMerchantFromPartner',
             Version: '1.0',
             ChannelCode: 'NEXTSHOP',
-            EncData: data2,
+            EncData: [data],
             Checksum: '1b15118c5e7c56e0ca5de1fc7c9a8667',
           }),
         };
